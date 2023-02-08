@@ -11,7 +11,7 @@ import DepComboBox from '../DepComboBox';
 const HandleQuestionSubmit = async({body}) => {
   const headers = {
     'Content-Type' : 'application/json',
-    'Authorization' : "Bearer cognito 의 access token"
+    'Authorization' : "Bearer cognito access token"
   }
 
   const response = await axios.post('http://localhost:5050/reviews', body, {headers: headers}).then((response) => {
