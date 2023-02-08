@@ -95,34 +95,30 @@ function NavBar() {
   //유저 로그인 상태관리
   const [user, setUser] = useState();
   const [isLogin, setIsLogin] = useState();
-  useEffect(() => {
+  const auth = useEffect(() => {
     axios.get('http://localhost:5050/auth').then((response)=> {  
       setUser(response.data.name);  //user값이 있으면
       setIsLogin(true);  //token 값이 있으면
       //console.log(response.data.token, "user 토큰 값");
-      //console.log(response.data.name, "user 닉네임 값");
     })
   }, []);
 
   let button;
   const navigate = useNavigate();
 
+  //로그인 버튼 이벤트
   const handleLoginClick = () => {
     navigate("/login");
   }
 
+  //로그아웃 버튼 이벤트
   const handleLogoutClick = () => {
-    setIsLogin(false);
-    navigate("/");
-  }
-
-  //로그아웃
-  useEffect(() => {
     axios.get('http://localhost:5050/logout').then((response)=> { 
       setIsLogin(false);
       console.log("로그아웃되었습니다.")
     })
-  }, []);
+    navigate("/");
+  };
 
   const handleSigninClick = () => {
     navigate("/signin");
