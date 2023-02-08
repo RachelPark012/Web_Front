@@ -6,15 +6,16 @@ export default function DepComboBox() {
   return (
     <Autocomplete
       disablePortal
-      id="combo-box-demo"
+      labelId="demo-simple-select-required-label"
+      id="demo-simple-select-required"
       options={dep}
       sx={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="전공" size="small" id="fullWidth"/>}
+      //isOptionEqualToValue={(option, value) => option.name === value.name || value === ""}
+      renderInput={(params) => <TextField {...params} label="전공 *" size="small" id="fullWidth"/>}
     />
   );
 }
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const dep = [
   { label: '한국어문학부'},
   { label: '역사문화학과'},

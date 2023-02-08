@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Rout, useNavigate } from 'react-router-dom';
+import { Link, Route, useNavigate } from 'react-router-dom';
 import Auth from './Auth';
 import Home from './Home';
 import Profile from './Profile';
@@ -8,6 +8,7 @@ import { Container } from '@mui/system';
 import { Button } from '@mui/material';
 import CheckForm from './CheckForm';
 import axios from 'axios';
+import App from '../App';
 
 function LoginForm( {userId} ) {
   const [id, setId] = useState('');
@@ -27,26 +28,18 @@ function LoginForm( {userId} ) {
       {
         headers: {
           'Content-Type': 'application/json',
-          // 'Accept': 'application/json',
         },
       })
-      // 그러면 서버에서 클라이언트로 response(응답)으로 
-      // {ok: true} 아니면 {ok: false}가 온다.
-      // .then((response) => {
-      //   console.log(response); // response.data로 해야?
-      // })
       .then((result) => {
         console.log(result.data, "결과값");
         console.log(result.data.loginSuccess, "LoginSuccess 결과값");
         if (result.data.loginSuccess === true){
       	// 성공하면
           window.alert("로그인 성공");
-          navigate("/");  //////////////////////로그인시 사용한 아이디를 넣어 보내기
+          window.location.replace("/"); 
         } else if (result.data.loginSuccess === false) {
           window.alert("로그인 실패");
           console.log("로그인 실패");
-          //setId("");
-          //setPassword("");  굳이
         }
       })
       .catch((error) => {
@@ -72,7 +65,6 @@ function LoginForm( {userId} ) {
                     onChange={({ target: { value } }) => setId(value)}
                     type="text"
                     placeholder="아이디"
-                    maxlength="10"
                     size="small"
                 />
                 <br/>
@@ -86,7 +78,6 @@ function LoginForm( {userId} ) {
                     onChange={({ target: { value } }) => setPassword(value)}
                     type="password"
                     placeholder="Password"
-                    maxlength="10"
                     size="small"
               />
                 <br/>

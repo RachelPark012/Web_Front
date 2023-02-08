@@ -6,7 +6,11 @@ export default function Questions() {
   return (
     <>
         <Container maxWidth="sm">
-            <Voc3 />
+        <div style={{ 
+            display: 'flex', justifyContent: 'center', alignItems: 'center', 
+            width: '100%', height: '90vh',}}>
+              <Voc3 />
+          </div>
         </Container>
     </>
   )

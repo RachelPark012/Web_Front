@@ -6,7 +6,11 @@ export default function Quals() {
   return (
     <>
         <Container maxWidth="sm">
-            <Voc />
+          <div style={{ 
+              display: 'flex', justifyContent: 'center', alignItems: 'center', 
+              width: '100%', height: '70vh',}}>
+                <Voc />
+            </div>
         </Container>
     </>
   )

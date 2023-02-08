@@ -15,7 +15,7 @@ import AcUnitIcon from '@mui/icons-material/AcUnit';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
-import { Link, BrowserRouter as Router } from 'react-router-dom';
+import { Link, BrowserRouter as Router, useNavigate } from 'react-router-dom';
 import Intro from "./Intro";
 import axios from 'axios';
 
@@ -92,19 +92,33 @@ function NavBar() {
     setOpen(false);
   };
 
-  
-
   //유저 로그인 상태관리
   const [user, setUser] = useState();
   const [isLogin, setIsLogin] = useState();
   useEffect(() => {
     axios.get('http://localhost:5050/auth').then((response)=> {  
       setUser(response.data.name);  //user값이 있으면
-      setIsLogin(response.data.token);  //token 값이 있으면
-      console.log(response.data.token, "user 토큰 값");
-      console.log(response.data.name, "user 닉네임 값");
+      setIsLogin(true);  //token 값이 있으면
+      //console.log(response.data.token, "user 토큰 값");
+      //console.log(response.data.name, "user 닉네임 값");
     })
   }, []);
+
+  let button;
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  }
+
+  const handleLogoutClick = () => {
+    setIsLogin(false);
+    navigate("/");
+  }
+
+  const handleSigninClick = () => {
+    navigate("/signin");
+  }
 
   return (
     <>
@@ -178,18 +192,29 @@ function NavBar() {
                 />
               </Search>
 
-                <Box >
-                    <Button href="/login" sx={{ my: 2, color: 'white', display: 'block' }}>
-                    login 여기 처리
-                    </Button>
-                </Box>
-
                 {
-                  user ?
-                  <p> Hi! {user} </p>
+                  isLogin ?
+                  <Box >
+                    <Button onClick={handleLogoutClick} sx={{ my: 2, color: 'white', display: 'block' }}>
+                    logout
+                    </Button>
+                  </Box>
                   :
                   <Box >
-                      <Button href="/signin" sx={{ my: 2, color: 'white', display: 'block' }}>
+                      <Button onClick={handleLoginClick} sx={{ my: 2, color: 'white', display: 'block' }}>
+                      login
+                      </Button>
+                  </Box>
+                }
+
+                {
+                  isLogin ?
+                  <Box >
+                    <p> Hi! </p>
+                  </Box>
+                  :
+                  <Box >
+                      <Button onClick={handleSigninClick} sx={{ my: 2, color: 'white', display: 'block' }}>
                       signin
                       </Button>
                   </Box>
@@ -199,7 +224,7 @@ function NavBar() {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    <Avatar alt="Remy Sharp" />
                   </IconButton>
                 </Tooltip>
                 <Menu

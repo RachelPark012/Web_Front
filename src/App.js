@@ -5,7 +5,6 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import LoginForm from './pages/LoginForm';
 //import LogoutButton from './pages/LogoutButton';
-import SignIn from './pages/SignIn';
 import Profile from './pages/Profile';
 import NavBar from './pages/NavBar';
 import SideBar from './pages/SideBar';
@@ -22,33 +21,23 @@ import Voc3 from './pages/VocQuestions/Voc3';
 import VocView3 from './pages/VocQuestions/VocView3';
 import VocQuestion3 from './pages/VocQuestions/VocQuestions3';
 import axios from 'axios';
+import SingIn from './pages/SignIn';
 
 
 function App() {
   //유저 로그인 상태관리
   const [user, setUser] = useState();
-  const [isLogin, setIsLogin] = useState();
+  const [isLogin, setIsLogin] = useState(false);
   useEffect(() => {
     axios.get('http://localhost:5050/auth').then((response)=> {  
       setUser(response.data.name);  //user값이 있으면
-      setIsLogin(response.data.token);  //token 값이 있으면
-      console.log(response.data.token, "home user 토큰 값");
-      console.log(response.data.name, "home user 닉네임 값");
+      setIsLogin(true);  //token 값이 있으면
+      //console.log(response.data.token, "home user 토큰 값");
+      //console.log(response.data.name, "home user 닉네임 값");
     })
   }, []);
 
-
-  // 로그인 상태 관리
   const [userId, setUserId] = useState(null);
-  
-  /*useEffect(() => {
-    const userData = GetData();
-    setUserId(userData.id);
-    if(userData.token){  //user 데이터의 토큰이 존재하면
-      setIsLogin(true);
-    }
-  }, []);*/
-
   const logout = () => setIsLogin(false);
 
   
@@ -57,7 +46,7 @@ function App() {
     <>
     <Router>
       <header>
-        <NavBar />
+        {<NavBar isLogin={isLogin} />}
         <img src={ full } width="100%"/> 
       </header>                               
       <hr />
@@ -66,7 +55,7 @@ function App() {
         </aside>
         <main >
           <Routes>
-            <Route exact path="/" element={<Home/>} />
+            <Route exact path="*" element={<Home/>} />
             <Route
               path="/login"
               element = {<LoginForm isLogin={isLogin} />
@@ -74,9 +63,9 @@ function App() {
             />
             <Route
               path="/profile"
-              element={<Profile isLogin= {isLogin} userId={userId}/>}
+              element={<Profile isLogin={isLogin} userId={userId}/>}
             />
-            <Route path="/signin" element={<SignIn/>} />
+            <Route path="/signin" element={<SingIn/>} />
             <Route element={NotFound} />
             <Route path="/quals" element={<Quals/>} />
             <Route path="/questions" element={<Questions/>} />

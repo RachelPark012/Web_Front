@@ -8,7 +8,7 @@ export default function Reviews() {
         <Container maxWidth="sm">
           <div style={{ 
             display: 'flex', justifyContent: 'center', alignItems: 'center', 
-            width: '100%', height: '10vh',}}>
+            width: '100%', height: '40vh',}}>
               <Voc2 />
           </div>
         </Container>
