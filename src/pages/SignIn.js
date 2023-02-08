@@ -29,9 +29,11 @@ function SignIn() {
 
   // 유효성 검사
   const [isId, setIsId] = useState(false)
+  const [isFinalId, setIsFianlId] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
   const [isUserName, setIsUserName] = useState(false)
+  const [isFinalUserName, setIsFianlUserName] = useState(false)
 
 
   const handleSubmitClick = () => {
@@ -58,7 +60,7 @@ function SignIn() {
         console.log(result);
         console.log("signupDB!");
         window.alert('회원가입이 되었습니다! 로그인 해주세요.');
-        <Link to="/login"/>
+        window.location.replace("/login"); 
       })
       .catch((error) => {
         window.alert('회원가입이 정상적으로 되지 않았습니다.');
@@ -82,12 +84,12 @@ function SignIn() {
           console.log(result.data.success, "LoginSuccess 결과값");
           if (result.data.success === true){
             window.alert("사용할 수 있는 아이디입니다.");
+            setIsFianlId(true)
             setFinalId(id);
             console.log(finalId,"최종 ID입니다.");
           } else if (result.data.success === false) {
             window.alert("사용할 수 없는 아이디입니다.");
             console.log("사용할 수 없는 아이디");
-            setId("");
           }
         })
         .catch((error) => {
@@ -112,16 +114,16 @@ function SignIn() {
           console.log(result.data.success, "LoginSuccess 결과값");
           if (result.data.success === true){
           window.alert("사용할 수 있는 닉네임입니다.");
+          setIsFianlUserName(true)
           setFinalName(userName);
           console.log(userName,"최종 닉네임입니다.");
           } else if (result.data.success === false) {
             window.alert("사용할 수 없는 닉네임입니다.");
             console.log("사용할 수 없는 닉네임");
-            setId("");
           }
         })
         .catch((error) => {
-          window.alert("닉네임 등록 실패");
+          window.alert("사용할 수 없는 닉네임입니다.");
           console.log(error);
         });
   }
@@ -282,13 +284,12 @@ function SignIn() {
             </div>
             <br/>
             <NumComboBox value={number}
-              onChange={handleNumChange}  //체크박스 오케이  >> 숫자만 입력 가능하게 해야 함
-              />
-              <p>{number} number값</p>   
+              onChange={handleNumChange}  //체크박스 값 확인 필요
+              /> 
             <br/>
             <DepComboBox value={major}
               onChange={handleMajorChange} />
-              <p>{major} major값</p> 
+       
             <br/>
             <Button variant="contained" onClick={handleSubmitClick} 
             disabled={!(isId && isPassword && isPasswordConfirm && isUserName)}>Sign In</Button>

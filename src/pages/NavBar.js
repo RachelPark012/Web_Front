@@ -116,6 +116,14 @@ function NavBar() {
     navigate("/");
   }
 
+  //로그아웃
+  useEffect(() => {
+    axios.get('http://localhost:5050/logout').then((response)=> { 
+      setIsLogin(false);
+      console.log("로그아웃되었습니다.")
+    })
+  }, []);
+
   const handleSigninClick = () => {
     navigate("/signin");
   }
